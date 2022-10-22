@@ -1,5 +1,4 @@
 import sys
-
 import requests
 from datetime import datetime
 import pandas as pd
@@ -46,8 +45,8 @@ class CryptoData:
         # df.to_csv('out.csv')
         return df
 
-    def getTimeSeries(self):
-        return [day for day in self.allData]
+    # def getTimeSeries(self):
+    #     return [day for day in self.allData]
 
     def getElement(self, type: str):
         try:

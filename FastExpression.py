@@ -1,7 +1,8 @@
 from CryptoData import CryptoData
 from statistics import *
-
+import talib as ta
 """OPERATOR"""
+
 
 
 def accumulationList(num_list: list, lookback_days=20):
