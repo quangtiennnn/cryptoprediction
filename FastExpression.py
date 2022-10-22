@@ -1,6 +1,8 @@
 from CryptoData import CryptoData
 from statistics import *
-import talib as ta
+# import talib as ta
+import pandas_ta as ta
+
 """OPERATOR"""
 
 
@@ -78,30 +80,19 @@ def ts_std_dev(list: list, lookback_days: int):
 
 
 """INDICATOR"""
+#VWAP
+def vwap(DataFrame):
+    return DataFrame.ta.vwap().values.tolist()
+
+def adx(DataFrame):
+    return DataFrame.ta.adx()["ADX_14"].tolist()
 
 
-# Volume-Weighted Average Price
-def vwap(data: CryptoData, lookback_days=20):
-    high = data.getElement("high")
-    close = data.getElement("close")
-    low = data.getElement("low")
-    volume = data.getElement("volume")
-    typical_price = [(x + y + z) / 3 for (x, y, z) in zip(high, close, low)]
-    tvp = [x * y for (x, y) in zip(volume, typical_price)]
-    total_vp = accumulationList(tvp, lookback_days)
-    total_volume = accumulationList(volume, lookback_days)
-    return typical_price[:lookback_days - 1] + [x / y for (x, y) in zip(total_vp, total_volume)]
 
 
-def SMA(data: CryptoData, lookback_days=20):
-    close = data.getElement("close")
-    return close[:lookback_days - 1] + [ts_mean(close[y - lookback_days:y], lookback_days) for y in
-                                        range(lookback_days, len(close) + 1)]
 
 
-def BollingerBands(data: CryptoData, lookback_days=20):
-    close = data.getElement("close")
-    middle_band = SMA(data, lookback_days)
-    upper_band = [x + 2 * y for (x, y) in zip(SMA(data, lookback_days), ts_std_dev(close, lookback_days))]
-    lower_band = [x - 2 * y for (x, y) in zip(SMA(data, lookback_days), ts_std_dev(close, lookback_days))]
-    return {"upper": upper_band, "middle": middle_band, "lower": lower_band}
+
+
+
+

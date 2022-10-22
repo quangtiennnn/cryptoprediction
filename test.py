@@ -1,17 +1,14 @@
 import numpy as np
 from CryptoData import CryptoData
-from FastExpression import *
+# from FastExpression import *
 from QuantAnalysis import QuantAnalysis
 import pandas as pd
 # import talib as ta
 import pandas_ta as ta
 
 BTC = CryptoData("BTC")
-print(BTC.df)
-close = BTC.getElement("close")
-
-print(SMA(BTC))
-#
+df = BTC.df
+print(df)
 # data = {
 #     "BTC": {
 #         "algorithm1" : QuantAnalysis(BTC).algorithm1(),
@@ -24,12 +21,12 @@ print(SMA(BTC))
 # print(data)
 # df = pd.DataFrame.from_dict(data,orient="index")
 # print(df)
-# close = np.random.random(100)
-arr = np.array(close)
-output = ta.SMA(arr,20)
-print(output)
-upper, middle, lower = ta.BBANDS(arr, matype=ta.MA_Type.T3,timeperiod =20)
-print(upper[-1])
-print(middle[-1])
-print(lower[-1])
+df.ta.indicators()
+# df1 = df.ta.vwap().values.tolist()
+# print(df1)
 
+# ta.help
+help(ta.cdl_pattern)
+df1 = df.ta.cdl_pattern()
+print(df1)
+df1.to_csv("out.csv")

@@ -12,6 +12,13 @@ class CryptoData:
     def __init__(self, symbol: str):
         self.symbol = symbol
         self.df = self.getData()
+        #Define OLHC:
+        self.open = self.df["open"]
+        self.high = self.df["high"]
+        self.low = self.df["low"]
+        self.close = self.df["close"]
+        self.volume = self.df["volume"]
+        self.cap = self.df["cap"]
 
     def getData(self):
         parameters = {
@@ -43,13 +50,14 @@ class CryptoData:
             '6. market cap (USD)': 'cap',
             }, inplace=True)
         # df.to_csv('out.csv')
+        df = df.astype(
+            {
+                'open': 'float',
+                'high': 'float',
+                'low': 'float',
+                'close': 'float',
+                'volume': 'float',
+                'cap': 'float',
+            }
+        )
         return df
-
-    # def getTimeSeries(self):
-    #     return [day for day in self.allData]
-
-    def getElement(self, type: str):
-        try:
-            return list(map(float,self.df[type].tolist()))
-        except:
-            print(f"Something when wrong!! Check your type input: {type}")
