@@ -5,6 +5,16 @@ import pandas_ta as ta
 
 """OPERATOR"""
 
+def zeroCrossover(list:list):
+    zero_crossover = []
+    for i in range(len(list)):
+        if list[i] > 0 and list[i - 1] < 0:
+            zero_crossover.append(1)
+        elif list[i] < 0 and list[i - 1] > 0:
+            zero_crossover.append(-1)
+        else:
+            zero_crossover.append(0)
+    return zero_crossover
 
 
 def accumulationList(num_list: list, lookback_days=20):
@@ -84,8 +94,39 @@ def ts_std_dev(list: list, lookback_days: int):
 def vwap(DataFrame):
     return DataFrame.ta.vwap().values.tolist()
 
+
+
+"""Oscillator INDICATOR"""
+# Awesome Oscillator
+def ao(DataFrame):
+    return DataFrame.ta.ao().values.tolist()
+
+# Absolute Price Oscillator
+def apo(DataFrame):
+    return DataFrame.ta.apo().values.tolist()
+
+# Balance of Power
+def bop(DataFrame):
+    return DataFrame.ta.bop().values.tolist()
+
+# Chande Forecast Oscillator
+def cfo(DataFrame):
+    return DataFrame.ta.cfo().values.tolist()
+
+# Stochastic Oscillator
+def stoch(DataFrame):
+    return DataFrame.ta.stoch().values.tolist()
+
+# Relative Strength Index
+def rsi(DataFrame):
+    return DataFrame.ta.rsi().values.tolist()
+
+
+"""TREND INDICATOR"""
+# Average Directional Movement Index
 def adx(DataFrame):
-    return DataFrame.ta.adx()["ADX_14"].tolist()
+    return DataFrame.ta.adx().values.tolist()
+
 
 
 

@@ -49,7 +49,6 @@ class CryptoData:
             '5. volume' : 'volume',
             '6. market cap (USD)': 'cap',
             }, inplace=True)
-        # df.to_csv('out.csv')
         df = df.astype(
             {
                 'open': 'float',
