@@ -1,21 +1,10 @@
 from CryptoData import CryptoData
 from statistics import *
 # import talib as ta
+import numpy as np
 import pandas_ta as ta
 
 """OPERATOR"""
-
-def zeroCrossover(list:list):
-    zero_crossover = []
-    for i in range(len(list)):
-        if list[i] > 0 and list[i - 1] < 0:
-            zero_crossover.append(1)
-        elif list[i] < 0 and list[i - 1] > 0:
-            zero_crossover.append(-1)
-        else:
-            zero_crossover.append(0)
-    return zero_crossover
-
 
 def accumulationList(num_list: list, lookback_days=20):
     return [sum(num_list[y - lookback_days:y]) for y in range(lookback_days, len(num_list) + 1)]
@@ -94,8 +83,6 @@ def ts_std_dev(list: list, lookback_days: int):
 def vwap(DataFrame):
     return DataFrame.ta.vwap().values.tolist()
 
-
-
 """Oscillator INDICATOR"""
 # Awesome Oscillator
 def ao(DataFrame):
@@ -119,7 +106,7 @@ def stoch(DataFrame):
 
 # Relative Strength Index
 def rsi(DataFrame):
-    return DataFrame.ta.rsi().values.tolist()
+    return np.array(DataFrame.ta.rsi().values)
 
 
 """TREND INDICATOR"""

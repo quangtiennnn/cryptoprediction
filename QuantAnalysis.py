@@ -1,30 +1,37 @@
 from FastExpression import *
-from Cryptodata_OHLCR import Cryptodata_OHLCR
+from backtesting import Backtest, Strategy
+from backtesting.lib import crossover
+from backtesting.test import SMA
 import math
 import pandas as pd
 
-class QuantAnalysis:
-    def __init__(self, data_OHLCR: Cryptodata_OHLCR):
-        self.df = data_OHLCR
-        self.open = self.df.getElement("open")
-        self.high = self.df.getElement("high")
-        self.low = self.df.getElement("low")
-        self.close = self.df.getElement("close")
-        self.volume = self.df.getElement("volume")
-        self.cap = self.df.getElement("cap")
-        self.len = len(self.close)
+class SmaCross(Strategy):
+    n1 = 10
+    n2 = 20
+    def init(self):
+        close = self.data.Close
+        self.sma1 = self.I(SMA, close, self.n1)
+        self.sma2 = self.I(SMA, close, self.n2)
 
-    def oscillatorAnalysis(self):
-        list = ao(self.df)
+    def next(self):
+        if crossover(self.sma1, self.sma2):
+            self.position.close()
+            self.buy()
+        elif crossover(self.sma2, self.sma1):
+            self.position.close()
+            self.sell()
 
-    def rsiDivergent(self):
-
-
-
-
-
-
-
+class RSI(Strategy):
+    def init(self):
+        close = self.data.Close
+        self.rsi = rsi(self.data)
+    def next(self):
+        if self.rsi < 30:
+            self.position.close()
+            self.buy()
+        if self.rsi > 70:
+            self.position.close()
+            self.buy()
 
 
     # def marketTrend(self):
